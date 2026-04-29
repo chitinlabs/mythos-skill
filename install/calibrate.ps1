@@ -7,7 +7,7 @@
 # to mode-specific expected baselines. Manual by design — quality of mythos
 # reasoning cannot be programmatically verified, only structural properties.
 #
-# Output: writes calibration-report-YYYYMMDD-HHMM.md in scripts/.
+# Output: writes calibration-report-YYYYMMDD-HHMM.md next to itself (install/).
 
 $ErrorActionPreference = "Stop"
 

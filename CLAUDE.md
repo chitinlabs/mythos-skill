@@ -11,17 +11,22 @@ Do not treat this repo as an ordinary application project — the "code" is a pr
 ## Repository layout
 
 ```
-.claude/skills/mythos/        # the only shipping artifact
+.claude/skills/mythos/        # the marketplace artifact (agent-portable)
 ├── SKILL.md                  # main entry; all three-mode routing logic lives here
 ├── references/               # lazy-loaded references; SKILL.md Reads them at specific STEPs
 │   ├── lenses.md             # 12 lenses + question-type → lens sequence + driver → lens weighting
 │   ├── prompt-templates.md   # Prelude / per-round / Coda templates
 │   ├── agent-blueprint.md    # parallel subagent dispatch + merge protocol
-│   ├── examples.md           # annotated examples
-│   └── mythos-init.md        # protocol snippet injected by the init script
-└── scripts/
-    ├── init.ps1 / init.sh    # install into another project or user-global ~/.claude/CLAUDE.md
-    └── calibrate.ps1/.sh     # interactive 5-case calibration; emits a timestamped markdown report
+│   ├── examples.md           # annotated examples (lazy-loaded by SKILL.md)
+│   └── mythos-init.md        # protocol snippet injected by the install script
+├── examples/                 # marketplace-facing showcase
+│   └── README.md
+└── tests/                    # marketplace-facing test docs (manual calibration)
+    └── README.md
+
+install/                      # repo-only tooling — NOT bundled into the marketplace package
+├── init.ps1 / init.sh        # install into another project or user-global ~/.claude/CLAUDE.md
+└── calibrate.ps1 / calibrate.sh   # interactive 5-case calibration; emits a timestamped markdown report
 
 papers/        research papers (gitignored, kept locally for reference)
 research/      early-stage research scripts and scan results (gitignored)
@@ -76,7 +81,7 @@ Criterion 5 is the linchpin against over-thinking. Don't delete it from SKILL.md
 
 ## Install scripts
 
-`scripts/init.ps1` / `init.sh` install the skill into a target project or user-globally (`~/.claude/CLAUDE.md`). The two scripts must be edited together — the PowerShell and bash logic must stay equivalent. Supported flags:
+`install/init.ps1` / `install/init.sh` install the skill into a target project or user-globally (`~/.claude/CLAUDE.md`). They live at the repo root, **outside** the marketplace skill folder, so they are not bundled when this skill is published to ClawHub / OpenClaw / agentskills.io registries. The two scripts must be edited together — the PowerShell and bash logic must stay equivalent. Supported flags:
 
 ```
 --user              user-global (applies to all projects)
@@ -89,7 +94,7 @@ The protocol snippet injected into CLAUDE.md is read from `references/mythos-ini
 
 ## Calibration
 
-`scripts/calibrate.ps1` / `calibrate.sh` walks 5 calibration cases (SQLite vs Postgres / pivot or stay / cache strategy / code-review improvement / AI training-data ethics), interactively asking what lens path / round count / convergence behavior was observed, then runs structural checks and emits a report.
+`install/calibrate.ps1` / `install/calibrate.sh` walks 5 calibration cases (SQLite vs Postgres / pivot or stay / cache strategy / code-review improvement / AI training-data ethics), interactively asking what lens path / round count / convergence behavior was observed, then runs structural checks and emits a report.
 
 **Calibration is manual by design** — mythos reasoning quality cannot be verified purely programmatically; only structural properties can (lens completeness, round count within budget, parallel vs sequential dispatch). Run it after any SKILL.md change. A FAIL is a signal to re-read SKILL.md, not a test ground truth.
 

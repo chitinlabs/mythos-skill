@@ -28,14 +28,16 @@ To install into another project or user-globally (applies to every project), run
 
 ```bash
 # Windows (PowerShell)
-.claude/skills/mythos/scripts/init.ps1 --user           # user-global (all projects)
-.claude/skills/mythos/scripts/init.ps1 D:\Work\MyGame   # specific project
-.claude/skills/mythos/scripts/init.ps1 --both           # install both
+install/init.ps1 --user           # user-global (all projects)
+install/init.ps1 D:\Work\MyGame   # specific project
+install/init.ps1 --both           # install both
 
 # macOS / Linux
-bash .claude/skills/mythos/scripts/init.sh --user
-bash .claude/skills/mythos/scripts/init.sh /path/to/project
+bash install/init.sh --user
+bash install/init.sh /path/to/project
 ```
+
+> **What the install scripts modify:** They copy the skill files (SKILL.md, references/, examples/, tests/) into `~/.claude/skills/mythos/` (user-global) or `<project>/.claude/skills/mythos/` (project-local), then **append a "Reasoning Protocol" block to your `CLAUDE.md`** at the same scope. That protocol block changes how Claude routes complex questions. The install scripts are not part of the marketplace skill package — they only ship in this repo, for direct-clone users who want one-command setup.
 
 Or just copy the directory:
 
@@ -156,22 +158,25 @@ Total rounds: silent/trace typically 4–8 rounds; agent mode dispatches 3–5 p
 ## File layout
 
 ```
-.claude/skills/mythos/
+.claude/skills/mythos/                # marketplace artifact (agent-portable)
 ├── SKILL.md                         # Main entry — three-mode routing + full pipeline
 ├── references/
 │   ├── lenses.md                    # 12 lenses + question-type selector + driver→lens mapping
 │   ├── prompt-templates.md          # Prelude/Recurrent/Coda internal templates (incl. degraded Coda)
 │   ├── agent-blueprint.md           # Full parallel-subagent prompt for Agent mode + failure fallback
-│   ├── examples.md                  # Annotated examples
-│   └── mythos-init.md               # Snippet injected by the init script
-└── scripts/
-    ├── init.ps1 / init.sh           # Install into another project or user-global
-    └── calibrate.ps1 / calibrate.sh # Interactive run of 5 calibration cases
+│   ├── examples.md                  # Annotated examples (lazy-loaded by SKILL.md)
+│   └── mythos-init.md               # Snippet injected by the install script
+├── examples/                        # marketplace-facing showcase examples
+└── tests/                           # marketplace-facing test docs (manual calibration)
+
+install/                              # source-only tooling (NOT bundled in marketplace package)
+├── init.ps1 / init.sh               # Install into another project or user-global ~/.claude/CLAUDE.md
+└── calibrate.ps1 / calibrate.sh     # Interactive run of 5 calibration cases
 ```
 
 ## Calibration
 
-`scripts/calibrate.ps1` / `bash scripts/calibrate.sh` runs 5 calibration cases (covering technical decisions, strategic tradeoffs, cache design, process improvement, ethics disputes), interactively verifying the structural properties of the three modes (lens path, round count, parallel vs sequential dispatch) and producing a timestamped report `calibration-report-YYYYMMDD-HHMM.md`.
+`install/calibrate.ps1` / `bash install/calibrate.sh` runs 5 calibration cases (covering technical decisions, strategic tradeoffs, cache design, process improvement, ethics disputes), interactively verifying the structural properties of the three modes (lens path, round count, parallel vs sequential dispatch) and producing a timestamped report `calibration-report-YYYYMMDD-HHMM.md`.
 
 Calibration is **manual by design** — mythos reasoning quality cannot be verified purely programmatically; only structural properties can (lens presence, round count, parallel dispatch). FAIL counts should be treated as a signal to re-read SKILL.md, not as ground truth.
 

@@ -92,8 +92,11 @@ if ($InstallProject -and -not $ProjectPath) {
 
 # ── Helpers ────────────────────────────────────────────────────
 
-$SourceDir = Split-Path -Parent $PSScriptRoot
+$RepoRoot = Split-Path -Parent $PSScriptRoot                 # <repo>
+$SourceDir = Join-Path $RepoRoot ".claude\skills\mythos"
 $SourceRefs = Join-Path $SourceDir "references"
+$SourceExamples = Join-Path $SourceDir "examples"
+$SourceTests = Join-Path $SourceDir "tests"
 
 function SafeCopy($src, $dstDir) {
     $fileName = Split-Path $src -Leaf
@@ -115,15 +118,16 @@ function SafeCopy($src, $dstDir) {
 function Install-SkillFiles($baseDir) {
     $d = Join-Path $baseDir ".claude\skills\mythos"
     $r = Join-Path $d "references"
-    $s = Join-Path $d "scripts"
-    SafeCopy (Join-Path $SourceDir  "SKILL.md")              $d
-    SafeCopy (Join-Path $SourceRefs "lenses.md")             $r
-    SafeCopy (Join-Path $SourceRefs "prompt-templates.md")   $r
-    SafeCopy (Join-Path $SourceRefs "agent-blueprint.md")    $r
-    SafeCopy (Join-Path $SourceRefs "examples.md")           $r
-    SafeCopy (Join-Path $SourceRefs "mythos-init.md")        $r
-    SafeCopy (Join-Path $PSScriptRoot "calibrate.ps1")       $s
-    SafeCopy (Join-Path $PSScriptRoot "calibrate.sh")        $s
+    $e = Join-Path $d "examples"
+    $t = Join-Path $d "tests"
+    SafeCopy (Join-Path $SourceDir      "SKILL.md")              $d
+    SafeCopy (Join-Path $SourceRefs     "lenses.md")             $r
+    SafeCopy (Join-Path $SourceRefs     "prompt-templates.md")   $r
+    SafeCopy (Join-Path $SourceRefs     "agent-blueprint.md")    $r
+    SafeCopy (Join-Path $SourceRefs     "examples.md")           $r
+    SafeCopy (Join-Path $SourceRefs     "mythos-init.md")        $r
+    SafeCopy (Join-Path $SourceExamples "README.md")             $e
+    SafeCopy (Join-Path $SourceTests    "README.md")             $t
 }
 
 function Install-Protocol($claudeMdPath) {

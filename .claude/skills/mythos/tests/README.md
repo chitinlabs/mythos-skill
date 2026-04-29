@@ -14,7 +14,9 @@ These are testable. Reasoning quality is not.
 
 ## Calibration script
 
-`../scripts/calibrate.ps1` (PowerShell) and `../scripts/calibrate.sh` (bash) walk **5 calibration cases** interactively. For each case, the script asks the operator what lens path / round count / convergence behavior was observed, runs structural checks, and emits a timestamped report (`calibration-report-YYYYMMDD-HHMM.md`).
+The calibration runner lives in the **source repository only** at `install/calibrate.ps1` and `install/calibrate.sh` — it is not bundled with the marketplace skill package. Clone [the source repo](https://github.com/chitinlabs/mythos-skill) if you want to run calibration yourself.
+
+The runner walks **5 calibration cases** interactively. For each case, the script asks the operator what lens path / round count / convergence behavior was observed, runs structural checks, and emits a timestamped report (`calibration-report-YYYYMMDD-HHMM.md`) next to itself.
 
 The 5 cases cover different problem shapes:
 
@@ -28,16 +30,18 @@ The 5 cases cover different problem shapes:
 
 ## Run the calibration
 
+From the source repo root:
+
 **Windows (PowerShell):**
 
 ```
-.claude/skills/mythos/scripts/calibrate.ps1
+install/calibrate.ps1
 ```
 
 **macOS / Linux:**
 
 ```
-bash .claude/skills/mythos/scripts/calibrate.sh
+bash install/calibrate.sh
 ```
 
 The script generates a `calibration-report-YYYYMMDD-HHMM.md` next to itself. Reports are gitignored (local-only artifacts).

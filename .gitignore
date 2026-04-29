@@ -8,7 +8,7 @@ vibe/
 .claude/settings.local.json
 
 # Calibration reports (local outputs, timestamped per run)
-.claude/skills/mythos/scripts/calibration-report-*.md
+install/calibration-report-*.md
 
 # OS metadata
 .DS_Store

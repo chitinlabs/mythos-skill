@@ -75,9 +75,12 @@ fi
 
 # ── Helpers ────────────────────────────────────────────────────
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SOURCE_DIR="$(dirname "$SCRIPT_DIR")"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"           # <repo>/install
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"                  # <repo>
+SOURCE_DIR="$REPO_ROOT/.claude/skills/mythos"
 SOURCE_REFS="$SOURCE_DIR/references"
+SOURCE_EXAMPLES="$SOURCE_DIR/examples"
+SOURCE_TESTS="$SOURCE_DIR/tests"
 
 safe_copy() {
     local src="$1" dstdir="$2" fname dst src_abs
@@ -97,18 +100,19 @@ safe_copy() {
 }
 
 install_skill_files() {
-    local base="$1" skills_dir refs_dir scripts_dir
+    local base="$1" skills_dir refs_dir examples_dir tests_dir
     skills_dir="$base/.claude/skills/mythos"
     refs_dir="$skills_dir/references"
-    scripts_dir="$skills_dir/scripts"
+    examples_dir="$skills_dir/examples"
+    tests_dir="$skills_dir/tests"
     safe_copy "$SOURCE_DIR/SKILL.md"              "$skills_dir"
     safe_copy "$SOURCE_REFS/lenses.md"            "$refs_dir"
     safe_copy "$SOURCE_REFS/prompt-templates.md"  "$refs_dir"
     safe_copy "$SOURCE_REFS/agent-blueprint.md"   "$refs_dir"
     safe_copy "$SOURCE_REFS/examples.md"          "$refs_dir"
     safe_copy "$SOURCE_REFS/mythos-init.md"       "$refs_dir"
-    safe_copy "$SCRIPT_DIR/calibrate.ps1"         "$scripts_dir"
-    safe_copy "$SCRIPT_DIR/calibrate.sh"          "$scripts_dir"
+    safe_copy "$SOURCE_EXAMPLES/README.md"        "$examples_dir"
+    safe_copy "$SOURCE_TESTS/README.md"           "$tests_dir"
 }
 
 install_protocol() {

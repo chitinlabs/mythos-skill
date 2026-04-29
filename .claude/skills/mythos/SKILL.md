@@ -1,7 +1,7 @@
 ---
 name: mythos
 description: Recurrent-depth reasoning via iterative refinement. Use for complex analysis, multi-hop problems, design decisions, strategic planning — any question where single-pass answers would be shallow.
-version: 1.0.0
+version: 0.1.1
 title: Mythos Skill
 author: chitinlabs
 type: command
@@ -300,6 +300,6 @@ Run `/mythos <question>` (or `/mythos trace <question>`, `/mythos deep <question
 
 ### Automated calibration runner
 
-Run `scripts/calibrate.ps1` (PowerShell) or `bash scripts/calibrate.sh` (bash) to walk through all five cases interactively across all three modes. The runner prompts you for observed lens path, round/subagent count, and convergence behavior, performs structural checks against the expected baselines, and writes a timestamped report (`calibration-report-YYYYMMDD-HHMM.md`) to the same `scripts/` directory.
+From the source repo, run `install/calibrate.ps1` (PowerShell) or `bash install/calibrate.sh` (bash) to walk through all five cases interactively across all three modes. The runner prompts you for observed lens path, round/subagent count, and convergence behavior, performs structural checks against the expected baselines, and writes a timestamped report (`calibration-report-YYYYMMDD-HHMM.md`) to the same `install/` directory. The calibration runner ships only in this source repository, not in the marketplace skill bundle.
 
 The runner is **manual by design** — quality of mythos reasoning cannot be programmatically verified, only structural properties (lens presence, round count, parallel-vs-sequential dispatch). Treat FAIL counts as signals to re-read SKILL.md, not as ground truth.
