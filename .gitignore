@@ -1,0 +1,27 @@
+# Local-only working dirs (kept out of the public repo)
+docs/
+papers/
+research/
+vibe/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Calibration reports (local outputs, timestamped per run)
+.claude/skills/mythos/scripts/calibration-report-*.md
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs / temp
+*.log
+*.tmp
