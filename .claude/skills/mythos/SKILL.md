@@ -1,6 +1,15 @@
 ---
 name: mythos
 description: Recurrent-depth reasoning via iterative refinement. Use for complex analysis, multi-hop problems, design decisions, strategic planning — any question where single-pass answers would be shallow.
+version: 1.0.0
+title: Mythos Skill
+author: chitinlabs
+type: command
+category: research
+invocation: /mythos
+tags: [reasoning, recurrent-depth, multi-round, latent-reasoning, claude-code]
+homepage: https://github.com/chitinlabs/mythos-skill
+license: MIT
 ---
 
 # Mythos — Recurrent-Depth Reasoning
